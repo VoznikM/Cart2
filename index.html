@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Стилі для іконки корзини */
+        .cart-icon {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #f39c12;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 18px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        
+        .cart-popup {
+            display: none;
+            position: fixed;
+            top: 50px;
+            right: 10px;
+            width: 300px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+
+        .cart-popup ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cart-popup ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Іконка корзини -->
+<div class="cart-icon" onclick="toggleCart()">
+    🛒
+</div>
+
+<!-- Спливаюче вікно корзини -->
+<div class="cart-popup" id="cartPopup">
+    <h3>Корзина</h3>
+    <ul id="cartItems">
+        <li>Корзина порожня</li>
+    </ul>
+</div>
+
+<script>
+    // Масив для збереження товарів
+    let cart = [];
+
+    function toggleCart() {
+        const popup = document.getElementById('cartPopup');
+        popup.style.display = popup.style.display === 'none' || popup.style.display === '' ? 'block' : 'none';
+    }
+
+    function addToCart(item) {
+        cart.push(item);
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartItems = document.getElementById('cartItems');
+        cartItems.innerHTML = '';
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<li>Корзина порожня</li>';
+        } else {
+            cart.forEach((item, index) => {
+                cartItems.innerHTML += `<li>${item} <button onclick="removeFromCart(${index})">Видалити</button></li>`;
+            });
+        }
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCart();
+    }
+</script>
+
+<!-- Товари -->
+<h1>Товари</h1>
+<button onclick="addToCart('Товар 1')">Додати Товар 1</button>
+<button onclick="addToCart('Товар 2')">Додати Товар 2</button>
+
+</body>
+</html>
